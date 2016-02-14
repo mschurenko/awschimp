@@ -1,18 +1,24 @@
 """
-Allows you to refer to AWS profiles from both ~/.aws/credentials and
-~/.aws/config files.
+aws utils fit for a chimp
 
-Search order is:
-~/.aws/credentials
-~/.aws/config
+Utilities:
 
-First match wins.
+  manage_creds:
 
-For role profiles you can call get_temp_keys() and it will fetch temporary keys
-form STS and cache them in a dot file in your home directory.
+    Allows you to refer to AWS profiles from both ~/.aws/credentials and
+    ~/.aws/config files.
 
-For more info on creating role profiles in ~/.aws/config:
-http://docs.aws.amazon.com/cli/latest/userguide/cli-roles.html
+    Search order is:
+      ~/.aws/credentials
+      ~/.aws/config
+
+    First match wins.
+
+    For role profiles you can call get_temp_keys() and it will fetch temporary
+    keys form STS and cache them in a dot file in your home directory.
+
+    For more info on creating role profiles in ~/.aws/config:
+    http://docs.aws.amazon.com/cli/latest/userguide/cli-roles.html
 """
 from awschimp.awscreds import AwsCreds
 

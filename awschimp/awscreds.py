@@ -120,7 +120,7 @@ class AwsCreds():
             assumed_role_object = sts_client.assume_role(
                 RoleArn=creds[2],
                 DurationSeconds=self.assume_role_expiration,
-                RoleSessionName=self.get_iam_user()
+                RoleSessionName=self.iam_user
             )
         except Exception as e:
             raise StsError(e.message)

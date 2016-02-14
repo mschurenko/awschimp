@@ -5,7 +5,7 @@ import os
 for f in open(os.path.join(os.path.dirname(__file__),
               "awschimp", "__init__.py")).readlines():
     if f.startswith("__version__"):
-        ver = f.split("=")[-1]
+        ver = f.split("=")[-1].split('"')[1]
 
 setup(
     name="awschimp",

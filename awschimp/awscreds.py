@@ -33,7 +33,7 @@ class AwsCreds():
     Sets RoleSessionName to IAM user name for cloudtrail purposes.
     """
 
-    def __init__(self, profile, prog_name="aws_simp"):
+    def __init__(self, profile, prog_name="awschimp"):
         self.profile = profile
         self.prog_name = prog_name
         self.assume_role_expiration = 900

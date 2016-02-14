@@ -14,7 +14,7 @@ form STS and cache them in a dot file in your home directory.
 For more info on creating role profiles in ~/.aws/config:
 http://docs.aws.amazon.com/cli/latest/userguide/cli-roles.html
 """
-from aws_simp.awscreds import AwsCreds
+from awschimp.awscreds import AwsCreds
 
 __version__ = "0.1"
 __author__ = "Matt Schurenko <matt.schurenko@gmail.com>"

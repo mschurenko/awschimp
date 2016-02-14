@@ -4,7 +4,7 @@ import awschimp
 
 setup(
     name="awschimp",
-    version=aws_simp.__version__,
+    version=awschimp.__version__,
     description="aws utils fit for a chimp",
     author="Matt Schurenko",
     author_email="matt.schurenko@gmail.com",

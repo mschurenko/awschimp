@@ -22,7 +22,7 @@ First match wins.
 For role profiles you can call get_temp_keys() and it will fetch temporary keys
 form STS and cache them in a dot file in your home directory.
 
-For more info on creating role profiles in ~/.aws/config:
+More info on creating role profiles in ~/.aws/config:<br>
 http://docs.aws.amazon.com/cli/latest/userguide/cli-roles.html
 
 #####Usage

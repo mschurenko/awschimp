@@ -2,8 +2,8 @@
 So far AwsCreds is the only class. More to be added later (maybe).
 '''
 import boto3
-import botocore
 import ConfigParser
+from getpass import getpass
 import os
 import pickle
 import time
@@ -45,6 +45,10 @@ class AwsCreds():
             raise KeyError("could not find HOME env variable")
         self.iam_user = self.get_iam_user()
 
+    @staticmethod
+    def get_token():
+        return getpass("Enter MFA code: ").strip()
+
     def get_from_creds(self, profile):
         creds = ConfigParser.ConfigParser()
         try:
@@ -70,6 +74,7 @@ class AwsCreds():
         except Exception as e:
             raise ConfigError(e.message)
         config._sections.pop("default", default=None)
+        mfa_serial = None
         if self.profile in map(lambda s: s.split('profile ')[-1],
                                config.sections()):
             options = config.options('profile ' + self.profile)
@@ -80,10 +85,12 @@ class AwsCreds():
                     source_profile = config.get('profile ' + self.profile,
                                                 option)
                     key, secret = self.get_from_creds(source_profile)
+                elif option == "mfa_serial":
+                    mfa_serial = config.get('profile ' + self.profile, option)
         else:
             raise ProfileError("profile {} was not found".format(self.profile))
 
-        return key, secret, role
+        return key, secret, role, mfa_serial
 
     def get_from_profile(self):
         '''
@@ -114,14 +121,25 @@ class AwsCreds():
         creds = self.get_from_profile()
         sts_client = boto3.client("sts", aws_access_key_id=creds[0],
                                   aws_secret_access_key=creds[1])
-        if len(creds) != 3:
+        if len(creds) != 4:
             raise ProfileError("No role arn found for {}".format(self.profile))
+
+        mfa_serial = creds[3]
         try:
-            assumed_role_object = sts_client.assume_role(
-                RoleArn=creds[2],
-                DurationSeconds=self.assume_role_expiration,
-                RoleSessionName=self.iam_user
-            )
+            if mfa_serial:
+                assumed_role_object = sts_client.assume_role(
+                    RoleArn=creds[2],
+                    DurationSeconds=self.assume_role_expiration,
+                    RoleSessionName=self.iam_user,
+                    SerialNumber=mfa_serial,
+                    TokenCode=self.get_token()
+                )
+            else:
+                assumed_role_object = sts_client.assume_role(
+                    RoleArn=creds[2],
+                    DurationSeconds=self.assume_role_expiration,
+                    RoleSessionName=self.iam_user,
+                )
         except Exception as e:
             raise StsError(e.message)
 

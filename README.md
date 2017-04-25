@@ -6,9 +6,9 @@ aws utils fit for a chimp
 pip install awschimp
 ```
 
-###Utilities:
+### Utilities:
 
-####manage_creds:
+#### manage_creds:
 
 Allows you to refer to AWS profiles from both ~/.aws/credentials and
 ~/.aws/config files.
@@ -25,9 +25,9 @@ form STS and cache them in a dot file in your home directory.
 More info on creating role profiles in ~/.aws/config:<br>
 http://docs.aws.amazon.com/cli/latest/userguide/cli-roles.html
 
-#####Usage
+#### Usage
 
-######Assuming a role
+#### Assuming a role
 ```shell
 >>> import awschimp
 >>> creds = awschimp.manage_creds("my_aws_profile", "my-cool-app")
@@ -40,7 +40,7 @@ $ ls -a ~/.*.cache
 /Users/mschurenko/.my-cool-app_my_aws_profile.cache
 ```
 
-######Fetching access key/scret key and role arn from profile
+#### Fetching access key/scret key and role arn from profile
 ```shell
 >>> import awschimp
 >>> creds = awschimp.manage_creds("my_aws_profile")
